@@ -4,10 +4,11 @@ module Browser
   class Platform
     class IOS < Base
       MATCHER = /(iPhone|iPad|iPod)/
-      VERSION_MATCHER = /OS ([\d.]+)/
+      VERSION_MATCHER = /OS (\d+(_\d+)?)/
 
       def version
-        ua[VERSION_MATCHER, 1] || "0"
+        matches = VERSION_MATCHER.match(ua)
+        matches ? matches[1].split("_").join(".").to_f.to_s : "0"
       end
 
       def name
